@@ -1,0 +1,46 @@
+{
+    "name": "multi-cursor-case-preserve",
+    "displayName": "Multiple cursor case preserve",
+    "description": "Preserves case when editing with multiple cursors",
+	"icon": "images/logo.png",
+	"bugs": {
+		"url": "https://github.com/Cardinal90/multi-cursor-case-preserve/issues"
+	},
+	"homepage": "https://github.com/Cardinal90/multi-cursor-case-preserve/blob/master/README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Cardinal90/multi-cursor-case-preserve.git"
+	},
+	"license": "EE LICENSE IN LICENSE",
+    "version": "1.0.0",
+    "publisher": "Cardinal90",
+    "engines": {
+        "vscode": "^1.0.0"
+    },
+    "categories": [
+        "Other"
+    ],
+	"keywords": [
+		"case",
+		"multiple cursors",
+		"multi-cursor",
+		"camelCase",
+		"preserve case"
+	],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./src/extension",
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.0.3",
+        "vscode": "^1.0.0",
+        "mocha": "^2.3.3",
+        "eslint": "^3.6.0",
+        "@types/node": "^6.0.40",
+        "@types/mocha": "^2.2.32"
+    }
+}
