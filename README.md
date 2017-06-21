@@ -12,6 +12,10 @@ Have you ever tried to change a single word in all variable names, but had your 
 
 ## Release Notes
 
+### 1.0.1
+
+Now it doesn't changing anything, if case was equal in the first place - prevents some annoying false positives.
+
 ### 1.0.0
 
 Initial release
