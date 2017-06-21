@@ -46,6 +46,14 @@ class MultiCursorCasePreserve {
         });
 	}
 
+	areSelectionsStrictlyEqualOrEmpty(args) {
+		var text = '';
+        return args.selections.every(function(selection) {
+			text = !text && !selection.isEmpty ? args.textEditor.document.getText(selection) : text;
+            return selection.isEmpty || args.textEditor.document.getText(selection) === text;
+        });
+	}
+
     initSelectionsData(args, state) {
         return args.selections.reduce(function(selectionsData, selection, index) {
             var text = args.textEditor.document.getText(selection);
@@ -118,8 +126,9 @@ class MultiCursorCasePreserve {
     }
 
 	update(args) {
-		// Work only with two and more selections, which are either equal or empty
-        if (!args || !args.selections || args.selections.length < 2 || !this.areSelectionsEqualOrEmpty(args)) {
+		// Work only with two or more selections, which are either equal or empty, but not strictly equal
+		if (!args || !args.selections || args.selections.length < 2 ||
+			!this.areSelectionsEqualOrEmpty(args) || this.areSelectionsStrictlyEqualOrEmpty(args)) {
             return;
 		}
 
