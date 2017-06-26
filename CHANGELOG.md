@@ -3,6 +3,10 @@ All notable changes to the "multi-cursor-case-preserve" extension will be docume
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+
+## [1.0.2] - 2017-06-26
+- Fixes bugs introduced in 1.0.1
+
 ## [1.0.1] - 2017-06-22
 - Now it doesn't changing anything, if case was equal in the first place - prevents some annoying false positives.
 
