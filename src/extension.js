@@ -128,7 +128,7 @@ class MultiCursorCasePreserve {
 	update(args) {
 		// Work only with two or more selections, which are either equal or empty, but not strictly equal
 		if (!args || !args.selections || args.selections.length < 2 ||
-			!this.areSelectionsEqualOrEmpty(args) || this.areSelectionsStrictlyEqualOrEmpty(args)) {
+			!this.areSelectionsEqualOrEmpty(args) || (this.areSelectionsStrictlyEqualOrEmpty(args) && !this.areSelectionsEmpty(args))) {
             return;
 		}
 
