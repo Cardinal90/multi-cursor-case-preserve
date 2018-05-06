@@ -2,17 +2,17 @@
     "name": "multi-cursor-case-preserve",
     "displayName": "Multiple cursor case preserve",
     "description": "Preserves case when editing with multiple cursors",
-	"icon": "images/logo.png",
-	"bugs": {
-		"url": "https://github.com/Cardinal90/multi-cursor-case-preserve/issues"
-	},
-	"homepage": "https://github.com/Cardinal90/multi-cursor-case-preserve/blob/master/README.md",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Cardinal90/multi-cursor-case-preserve.git"
-	},
-	"license": "EE LICENSE IN LICENSE",
-    "version": "1.0.2",
+    "icon": "images/logo.png",
+    "bugs": {
+        "url": "https://github.com/Cardinal90/multi-cursor-case-preserve/issues"
+    },
+    "homepage": "https://github.com/Cardinal90/multi-cursor-case-preserve/blob/master/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Cardinal90/multi-cursor-case-preserve.git"
+    },
+    "license": "EE LICENSE IN LICENSE",
+    "version": "1.0.3",
     "publisher": "Cardinal90",
     "engines": {
         "vscode": "^1.0.0"
@@ -20,13 +20,13 @@
     "categories": [
         "Other"
     ],
-	"keywords": [
-		"case",
-		"multiple cursors",
-		"multi-cursor",
-		"camelCase",
-		"preserve case"
-	],
+    "keywords": [
+        "case",
+        "multiple cursors",
+        "multi-cursor",
+        "camelCase",
+        "preserve case"
+    ],
     "activationEvents": [
         "*"
     ],
