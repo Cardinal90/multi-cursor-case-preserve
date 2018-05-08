@@ -4,6 +4,10 @@ All notable changes to the "multi-cursor-case-preserve" extension will be docume
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.0.4] - 2018-05-08
+
+*   More work on undo/redo
+
 ## [1.0.3] - 2018-05-06
 
 *   Improves undo/redo behavior

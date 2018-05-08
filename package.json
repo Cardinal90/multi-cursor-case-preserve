@@ -12,7 +12,7 @@
         "url": "https://github.com/Cardinal90/multi-cursor-case-preserve.git"
     },
     "license": "EE LICENSE IN LICENSE",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "publisher": "Cardinal90",
     "engines": {
         "vscode": "^1.0.0"

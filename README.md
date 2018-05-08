@@ -8,10 +8,14 @@ Have you ever tried to change a single word in all variable names, but had your 
 
 ## Known Issues
 
-*   Since 1.0.3 undo/redo for changes made by this extension is safe. It is still not perfect. [This issue](https://github.com/Microsoft/vscode/issues/38535) prevents me from solving undo/redo completely.
+*   ~~Since 1.0.3 undo/redo for changes made by this extension is safe.~~ As of 1.0.4 history for redo still breaks, if you undo a change made by copy/paste. [This issue](https://github.com/Microsoft/vscode/issues/38535) prevents me from solving undo/redo completely.
 *   Probably won't properly work for multiline selections, but this scenario doesn't seem likely.
 
 ## Release Notes
+
+### 1.0.4
+
+More work on undo/redo
 
 ### 1.0.3
 

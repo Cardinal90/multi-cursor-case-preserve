@@ -25,12 +25,12 @@ class MultiCursorCasePreserve {
         return state;
     }
 
-    didLinesChange(args, state) {
-        var lines = this.createLineArray(args);
-        return lines.some(function(line, index) {
-            return state.lines[index].text.toLowerCase() !== line.text.toLowerCase();
-        });
-    }
+    // didLinesChange(args, state) {
+    //     var lines = this.createLineArray(args);
+    //     return lines.some(function(line, index) {
+    //         return state.lines[index].text.toLowerCase() !== line.text.toLowerCase();
+    //     });
+    // }
 
     areSelectionsEmpty(args) {
         return args.selections.every(function(selection) {
@@ -54,6 +54,21 @@ class MultiCursorCasePreserve {
         });
     }
 
+    areRangesEqualLength(selectionsData) {
+        var firstLen = selectionsData[0].range.end.character - selectionsData[0].range.start.character;
+
+        for (let i = 0; i < selectionsData.length; i++) {
+            if (selectionsData[i].range.end.line !== selectionsData[i].range.start.line) {
+                return false;
+            }
+            var len = selectionsData[i].range.end.character - selectionsData[i].range.start.character;
+            if (len !== firstLen) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     initSelectionsData(args, state) {
         return args.selections.reduce(function(selectionsData, selection, index) {
             var text = args.textEditor.document.getText(selection);
@@ -66,7 +81,7 @@ class MultiCursorCasePreserve {
 
     categorizeSelections(state) {
         state.selectionsData.forEach(function(selectionData) {
-            if (/^[^a-z]+$/.test(selectionData.text)) {
+            if (/^[^a-z]+$/.test(selectionData.text) && selectionData.text.length > 1) {
                 selectionData.type = 'caps';
             } else if (/^[a-z].*/.test(selectionData.text)) {
                 selectionData.type = 'lower';
@@ -125,7 +140,7 @@ class MultiCursorCasePreserve {
             if (text !== newText) {
                 edits.push({
                     range: selectionData.range,
-                    text: newText
+                    text: newText,
                 });
             }
         });
@@ -158,13 +173,19 @@ class MultiCursorCasePreserve {
     }
 
     update(args) {
-        // Work only with two or more selections, which are either equal or empty, but not strictly equal
-        if (!args ||
-            !args.selections ||
-            args.selections.length < 2 ||
-            !this.areSelectionsEqualOrEmpty(args) ||
-            (this.areSelectionsStrictlyEqualOrEmpty(args) && !this.areSelectionsEmpty(args))
-        ) {
+        if (!args || !args.selections) {
+            return;
+        }
+
+        // Work only with two or more selections...
+        if (args.selections.length < 2) {
+            this.store.delete(args.textEditor);
+            return;
+        }
+
+        //, which are either equal or empty, but not strictly equal
+        if (!this.areSelectionsEqualOrEmpty(args) ||
+            (this.areSelectionsStrictlyEqualOrEmpty(args) && !this.areSelectionsEmpty(args))) {
             return;
         }
 
@@ -182,14 +203,14 @@ class MultiCursorCasePreserve {
         }
 
         // Compare full lines, where selections occur, with previously known state
-        var linesChanged = this.didLinesChange(args, state);
+        // var linesChanged = this.didLinesChange(args, state);
 
         // Check if all selections are empty
         var selectionIsEmpty = this.areSelectionsEmpty(args);
 
         // If no lines changed, it is a selection stage
         // !selectionIsEmpty check is needed because after undo lines will be changed and selected
-        if (linesChanged === false || !selectionIsEmpty) {
+        if (!selectionIsEmpty) {
             state.selectionsData = this.initSelectionsData(args, state);
             this.categorizeSelections(state);
             state.lines = this.createLineArray(args);
@@ -198,7 +219,10 @@ class MultiCursorCasePreserve {
             // (recalculation on every step is needed to correctly handle multiple selections in the same line)
         } else {
             state.selectionsData = this.calculateSelectionRanges(args, state);
-            this.editSelections(args, state);
+            var rangesAreEqual = this.areRangesEqualLength(state.selectionsData);
+            if (rangesAreEqual) {
+                this.editSelections(args, state);
+            }
         }
     }
 
