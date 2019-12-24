@@ -55,18 +55,22 @@ class MultiCursorCasePreserve {
     }
 
     areRangesEqualLength(selectionsData) {
-        var firstLen = selectionsData[0].range.end.character - selectionsData[0].range.start.character;
+        let selectionLength = selectionsData.length
+        
+        if (selectionLength) {
+            var firstLen = selectionsData[0].range.end.character - selectionsData[0].range.start.character;
 
-        for (let i = 0; i < selectionsData.length; i++) {
-            if (selectionsData[i].range.end.line !== selectionsData[i].range.start.line) {
-                return false;
+            for (let i = 0; i < selectionLength; i++) {
+                if (selectionsData[i].range.end.line !== selectionsData[i].range.start.line) {
+                    return false;
+                }
+                var len = selectionsData[i].range.end.character - selectionsData[i].range.start.character;
+                if (len !== firstLen) {
+                    return false;
+                }
             }
-            var len = selectionsData[i].range.end.character - selectionsData[i].range.start.character;
-            if (len !== firstLen) {
-                return false;
-            }
+            return true;
         }
-        return true;
     }
 
     initSelectionsData(args, state) {
@@ -96,19 +100,24 @@ class MultiCursorCasePreserve {
         var len = 1;
         var line = -1;
         return args.selections.reduce(function(selectionsData, selection, index) {
-            selectionsData[index] = selectionsData[index] || {};
-            if (selectionsData[index].start.line === line) {
-                count++;
-            } else {
-                count = 0;
-                len = selection.end.character - selectionsData[index].start.character;
+            if (selectionsData.length && selectionsData[index]) {
+               if (selectionsData[index].start.line === line) {
+                    count++;
+                } else {
+                    count = 0;
+                    len = selection.end.character - selectionsData[index].start.character;
+                }
+                
+                line = selectionsData[index].start.line;
+                selectionsData[index].range = new Range(
+                    selectionsData[index].start.translate(0, count * (len - selectionsData[index].text.length)),
+                    selection.end
+                );
+
+                return selectionsData;
             }
-            line = selectionsData[index].start.line;
-            selectionsData[index].range = new Range(
-                selectionsData[index].start.translate(0, count * (len - selectionsData[index].text.length)),
-                selection.end
-            );
-            return selectionsData;
+            
+            return {};
         }, state.selectionsData);
     }
 
