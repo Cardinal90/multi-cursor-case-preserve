@@ -11,7 +11,9 @@ class MultiCursorCasePreserve {
 
     createLineArray(args) {
         return args.selections.map(function(selection) {
-            return args.textEditor.document.lineAt(selection.start.line);
+            var doc = args.textEditor ? args.textEditor.document : args.document
+
+            return doc.lineAt(selection.start.line); 
         });
     }
 
@@ -41,16 +43,20 @@ class MultiCursorCasePreserve {
     areSelectionsEqualOrEmpty(args) {
         var text = '';
         return args.selections.every(function(selection) {
-            text = !text && !selection.isEmpty ? args.textEditor.document.getText(selection).toLowerCase() : text;
-            return selection.isEmpty || args.textEditor.document.getText(selection).toLowerCase() === text;
+            var doc = args.textEditor ? args.textEditor.document : args.document
+
+            text = !text && !selection.isEmpty ? doc.getText(selection).toLowerCase() : text;
+            return selection.isEmpty || doc.getText(selection).toLowerCase() === text;
         });
     }
 
     areSelectionsStrictlyEqualOrEmpty(args) {
         var text = '';
         return args.selections.every(function(selection) {
-            text = !text && !selection.isEmpty ? args.textEditor.document.getText(selection) : text;
-            return selection.isEmpty || args.textEditor.document.getText(selection) === text;
+            var doc = args.textEditor ? args.textEditor.document : args.document
+            
+            text = !text && !selection.isEmpty ? doc.getText(selection) : text;
+            return selection.isEmpty || doc.getText(selection) === text;
         });
     }
 
@@ -75,7 +81,9 @@ class MultiCursorCasePreserve {
 
     initSelectionsData(args, state) {
         return args.selections.reduce(function(selectionsData, selection, index) {
-            var text = args.textEditor.document.getText(selection);
+            var doc = args.textEditor ? args.textEditor.document : args.document
+
+            var text = doc.getText(selection);
             selectionsData[index] = selectionsData[index] || {};
             selectionsData[index].text = text;
             selectionsData[index].start = selection.start;
@@ -133,7 +141,8 @@ class MultiCursorCasePreserve {
         var edits = [];
 
         state.selectionsData.forEach(function(selectionData) {
-            var text = args.textEditor.document.getText(selectionData.range);
+            var doc = args.textEditor ? args.textEditor.document : args.document 
+            var text = doc.getText(selectionData.range);
             var newText = text;
             switch (selectionData.type) {
                 case 'caps':

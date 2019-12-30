@@ -2,3 +2,4 @@ node_modules
 *.vsix
 .history
 yarn.lock
+.DS_Store
