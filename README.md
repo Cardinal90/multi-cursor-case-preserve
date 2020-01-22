@@ -2,16 +2,20 @@
 
 ## Features
 
-Have you ever tried to change a single word in all variable names, but had your camelCase broken? This extension preserves selection case in these situations. It recognises CAPS, Uppercase and lowercase. Works for typing or copy-pasting.
+Have you ever tried to change a single word in all variable names, but had your camelCase broken? This extension preserves selection case in these situations. It recognises CAPS, Uppercase and lowercase. Works for typing or pasting.
 
 ![Example](images/Example.gif)
 
 ## Known Issues
 
-*   ~~Since 1.0.3 undo/redo for changes made by this extension is safe.~~ As of 1.0.4 history for redo still breaks, if you undo a change made by copy/paste. [This issue](https://github.com/Microsoft/vscode/issues/38535) prevents me from solving undo/redo completely.
-*   Probably won't properly work for multiline selections, but this scenario doesn't seem likely.
+*   History for redo breaks when you undo a change made by the extension after pasting into multiple selections. [This issue](https://github.com/Microsoft/vscode/issues/38535) prevents me from solving undo/redo completely.
+*   Undo/redo works one change at a time, which for CAPS usually means a **ctrl+z** for every symbol.
 
 ## Release Notes
+
+### 1.0.5
+
+Fix a rare exception
 
 ### 1.0.4
 

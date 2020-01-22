@@ -25,13 +25,6 @@ class MultiCursorCasePreserve {
         return state;
     }
 
-    // didLinesChange(args, state) {
-    //     var lines = this.createLineArray(args);
-    //     return lines.some(function(line, index) {
-    //         return state.lines[index].text.toLowerCase() !== line.text.toLowerCase();
-    //     });
-    // }
-
     areSelectionsEmpty(args) {
         return args.selections.every(function(selection) {
             return selection.isEmpty;
@@ -173,7 +166,7 @@ class MultiCursorCasePreserve {
     }
 
     update(args) {
-        if (!args || !args.selections) {
+        if (!args || !args.selections || !args.textEditor) {
             return;
         }
 
@@ -201,9 +194,6 @@ class MultiCursorCasePreserve {
         if (args.selections.length !== state.numberOfSelections) {
             state = this.createNewEditorState(args);
         }
-
-        // Compare full lines, where selections occur, with previously known state
-        // var linesChanged = this.didLinesChange(args, state);
 
         // Check if all selections are empty
         var selectionIsEmpty = this.areSelectionsEmpty(args);
