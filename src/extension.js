@@ -48,6 +48,10 @@ class MultiCursorCasePreserve {
     }
 
     areRangesEqualLength(selectionsData) {
+        if (!selectionsData) {
+            return false
+        }
+
         var firstLen = selectionsData[0].range.end.character - selectionsData[0].range.start.character;
 
         for (let i = 0; i < selectionsData.length; i++) {
@@ -89,7 +93,10 @@ class MultiCursorCasePreserve {
         var len = 1;
         var line = -1;
         return args.selections.reduce(function(selectionsData, selection, index) {
-            selectionsData[index] = selectionsData[index] || {};
+            if (!selectionsData || selectionsData.length === 0) {
+                return
+            }
+
             if (selectionsData[index].start.line === line) {
                 count++;
             } else {
