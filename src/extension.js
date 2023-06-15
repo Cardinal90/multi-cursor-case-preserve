@@ -119,15 +119,16 @@ class MultiCursorCasePreserve {
         state.selectionsData.forEach(function(selectionData) {
             var text = args.textEditor.document.getText(selectionData.range);
             var newText = text;
+            var firstChar = text[0] || '';
             switch (selectionData.type) {
                 case 'caps':
                     newText = text.toUpperCase();
                     break;
                 case 'lower':
-                    newText = text[0].toLowerCase() + text.substring(1);
+                    newText = firstChar.toLowerCase() + text.substring(1);
                     break;
                 case 'upper':
-                    newText = text[0].toUpperCase() + text.substring(1);
+                    newText = firstChar.toUpperCase() + text.substring(1);
                     break;
             }
             if (text !== newText) {
