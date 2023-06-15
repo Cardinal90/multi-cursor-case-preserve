@@ -200,7 +200,10 @@ class MultiCursorCasePreserve {
 
         // If no lines changed, it is a selection stage
         // !selectionIsEmpty check is needed because after undo lines will be changed and selected
-        if (!selectionIsEmpty) {
+        if (
+            !selectionIsEmpty || 
+            state.selectionsData.length !== state.numberOfSelections
+        ) {
             state.selectionsData = this.initSelectionsData(args, state);
             this.categorizeSelections(state);
             state.lines = this.createLineArray(args);
